@@ -73,7 +73,40 @@ Cette première étape permet de :
 - préparer le cadrage du futur Data Warehouse ;
 - servir de base aux prochains TP du module.
 
+### 📈 Analyse du Chiffre d'Affaires Mensuel (Online Retail)
+
+Le graphique ci-dessous illustre l'évolution mensuelle du chiffre d'affaires (Revenue) sur la période allant de **décembre 2010 à décembre 2011**.
+<img width="1123" height="619" alt="image" src="https://github.com/user-attachments/assets/960c4b27-6d4a-49d4-99d5-d14b7cd51fb0" />
+
+#### 🔍 Points clés de l'analyse :
+* **Stabilisation initiale (Déc 2010 – Aoû 2011) :** Le chiffre d'affaires oscille entre 520 000 et 800 000 unités monétaires, avec un creux enregistré en février et avril 2011 (environ 530 000 à 540 000).
+* **Forte croissance automnale (Sep 2011 – Nov 2011) :** Une nette accélération des ventes est observée à partir de septembre 2011, atteignant un pic historique en **novembre 2011 avec plus de 1,5 million**. Cette hausse s'explique principalement par la saisonnalité des achats de fin d'année (période pré-navide / Q4).
+* **Chute en décembre 2011 :** La baisse constatée en décembre 2011 est liée à un jeu de données tronqué en milieu de mois (collecte incomplète des données sur tout le mois).
+
+
+### 🏆 Top 10 des Produits Générateurs de Chiffre d'Affaires
+
+Ce graphique à barres horizontales présente les 10 articles ayant généré le chiffre d'affaires le plus élevé dans le jeu de données.
+<img width="1164" height="574" alt="image" src="https://github.com/user-attachments/assets/2147ada3-dc86-47fc-a74f-9a324abc5895" />
+
+#### 🔍 Constats principaux :
+* **Services vs Produits physiques :** L'élément en tête est `DOTCOM POSTAGE`, correspondant aux frais d'envoi et de livraison professionnels, ce qui indique un impact financier majeur de la logistique sur le revenu global.
+* **Best-sellers commerciaux :** Parmi les articles physiques, `REGENCY CAKESTAND 3 TIER` et `PAPER CRAFT , LITTLE BIRDIE` occupent les premières positions en termes de revenus générés.
+* **Articles de décoration et accessoires :** On retrouve des produits phares de la boutique tels que `WHITE HANGING HEART T-LIGHT HOLDER`, `PARTY BUNTING` et `JUMBO BAG RED RETROSPOT`.
+
+#### 🛠️ Méthodologie d'agrégation :
+```python
+top_produits = (
+    df_copy.groupby('Description')['Revenue'].sum()
+    .sort_values(ascending=False)
+    .head(10)
+)
+
+#### 🛠️ Méthodologie & Nettoyage des données :
+* Exclusion des transactions avec des quantités ou prix unitaires négatifs/nuls ($Quantity > 0$ et $UnitPrice > 0$).
+* Filtrage des commandes annulées (identifiables par le préfixe `'C'` dans la colonne `InvoiceNo`).
 ---
+
 
 ## Auteur
 
